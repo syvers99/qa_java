@@ -5,29 +5,28 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.mockito.Spy;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
-import static com.example.ConfigMap.*;
+import static com.example.ConfigConst.*;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.CALLS_REAL_METHODS;
+import static org.mockito.Mockito.mock;
 
 @RunWith(Parameterized.class)
 public class LionParamTest {
     private final String sex;
-    private final String non_suitableSex;
-    public LionParamTest(String sex, String non_suitableSex) {
+    private final String nonSuitableSex;
+    public LionParamTest(String sex, String nonSuitableSex) {
         this.sex = sex;
-        this.non_suitableSex = non_suitableSex;
+        this.nonSuitableSex = nonSuitableSex;
 
     }
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
-    @Spy
-    Feline feline;
-
 
     @Parameterized.Parameters
     public static Object[][] getTextData() {
@@ -36,10 +35,11 @@ public class LionParamTest {
                 {FEMALE,NULL_VALUE}
         };
     }
+    Feline feline = mock(Feline.class, CALLS_REAL_METHODS);
     Lion lion;
     @Before
     public void setUp () throws Exception {
-        lion = new Lion(sex, feline);}
+        lion = Mockito.spy(new Lion(sex, feline));}
 
 
     @Test
@@ -49,13 +49,14 @@ public class LionParamTest {
         } else {
             assertFalse(lion.doesHaveMane());
         }
+        Mockito.verify(lion, Mockito.times(1)).doesHaveMane();
     }
 
 
 
     @Test
     public void constructorTest()  {
-        Exception exception = assertThrows(Exception.class, () -> new Lion(non_suitableSex, feline));
+        Exception exception = assertThrows(Exception.class, () -> new Lion(nonSuitableSex, feline));
         String actualMessage = exception.getMessage();
         assertTrue(actualMessage.contains(MANE_EXCEPTION_MESSAGE));
     }

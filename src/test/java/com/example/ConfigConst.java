@@ -2,7 +2,7 @@ package com.example;
 
 import java.util.List;
 
-public class ConfigMap {
+public class ConfigConst {
     public static final List<String> PREDATOR_FOOD = List.of("Животные", "Птицы", "Рыба");
     public static final String  PREDATOR = "Хищник";
     public static final String  INSECT = "Жук";

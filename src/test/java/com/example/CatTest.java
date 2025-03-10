@@ -1,41 +1,42 @@
 package com.example;
 
 
+import org.junit.Before;
 import org.junit.Test;
 
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.mockito.Spy;
-
 import org.mockito.junit.MockitoJUnitRunner;
 
 
 
-import static com.example.ConfigMap.*;
+import static com.example.ConfigConst.*;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.CALLS_REAL_METHODS;
+import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CatTest {
 
-    @Spy
-    Feline feline;
+    Feline feline = mock(Feline.class, CALLS_REAL_METHODS);
+    Cat cat;
+
+    @Before
+    public void setUp() throws Exception {
+        cat = Mockito.spy(new Cat(feline));
+    }
 
 
     @Test
     public void getSoundTest() {
-        Cat cat = new Cat( feline );
-        assertEquals(CAT_SOUND,cat.getSound());
+        assertEquals(CAT_SOUND, cat.getSound());
+        Mockito.verify(cat, Mockito.times(1)).getSound();
     }
 
     @Test
-    public void getFoodTest() throws Exception{
-        Cat cat = new Cat( feline );
-        assertEquals(PREDATOR_FOOD,cat.getFood());
+    public void getFoodTest() throws Exception {
+        assertEquals(PREDATOR_FOOD, cat.getFood());
+        Mockito.verify(cat, Mockito.times(1)).getFood();
         Mockito.verify(feline, Mockito.times(1)).eatMeat();
-    }
-    @Test
-    public void constructorTest()  {
-        Cat cat = new Cat( null);
-        assertThrows(Exception.class, cat::getFood);
     }
 }

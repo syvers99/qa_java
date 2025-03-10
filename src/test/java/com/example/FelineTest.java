@@ -4,8 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-import static com.example.ConfigMap.FELINE;
-import static com.example.ConfigMap.PREDATOR_FOOD;
+import static com.example.ConfigConst.FELINE;
+import static com.example.ConfigConst.PREDATOR_FOOD;
 import static org.junit.Assert.*;
 
 public class FelineTest {
