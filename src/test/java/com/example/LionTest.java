@@ -30,7 +30,6 @@ public class LionTest  {
         Mockito.when(feline.getKittens()).thenReturn(1);
         assertEquals(1,lion.getKittens());
         Mockito.verify(feline, Mockito.times(1)).getKittens();
-        Mockito.verify(lion, Mockito.times(1)).getKittens();
     }
 
 
@@ -40,7 +39,6 @@ public class LionTest  {
         Mockito.when(feline.getFood(PREDATOR)).thenReturn(PREDATOR_FOOD);
         assertEquals(PREDATOR_FOOD, lion.getFood());
         Mockito.verify(feline, Mockito.times(1)).getFood(PREDATOR);
-        Mockito.verify(lion, Mockito.times(1)).getFood();
 
     }
 

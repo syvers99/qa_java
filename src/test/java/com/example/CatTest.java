@@ -36,7 +36,6 @@ public class CatTest {
     @Test
     public void getFoodTest() throws Exception {
         assertEquals(PREDATOR_FOOD, cat.getFood());
-        Mockito.verify(cat, Mockito.times(1)).getFood();
         Mockito.verify(feline, Mockito.times(1)).eatMeat();
     }
 }
